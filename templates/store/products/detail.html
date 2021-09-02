@@ -1,0 +1,82 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+
+{% load django_bootstrap_breadcrumbs %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb product.title product.get_absolute_url %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-4 order-md-first">
+                <img class="img-fluid mx-auto d-block" style="width: auto; height: auto; max-width: 100%; max-height: 100%; margin: auto; margin-top: 0px;" alt="Responsive image" src="{{ product.image.url }}">
+            </div>
+            <div class="col-md-8 col-lg-8 ps-md-3 ps-lg-5">
+                <h1 class="mb-0 h4">{{ product.title }}</h1>
+                <p><span class="lead">{{ product.author }}</span></p>
+                <!--p>{{ product.description|slice:":355" }}...</p-->
+                <div class="col-md-4" style="margin-bottom: 15px;">
+                    <div class="row">
+                        <div class="col-5">Kategori</div>
+                        <div class="col-7">: <a class="text-dark text-decoration-none" href="{% url 'store:category_list' product.category.slug %}">{{ product.category }}</a></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">Nama Toko</div>
+                        <div class="col-7">: DjangoEcommerce</div>
+                    </div>
+                </div>
+                <div class="border bg-light">
+                    <div class="col border-bottom">
+                        <div class="row p-3">
+                            <div class="col-6">Harga</div>
+                            <div class="col-6 text-end"><span class="h4 fw-bold">Rp. {% load humanize %} {{ product.price|intcomma }}</span></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row p-3">
+                            <div class="col-6">
+                                <label for="select">Beli</label>
+                                &nbsp;
+                                <select id="select">
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                    <option value="">3</option>
+                                    <option value="">4</option>
+                                </select>
+                            </div>
+                            <div class="col-6 text-end"><button type="button" class="btn btn-secondary btn-sm">Add tobasket</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <ul class="nav nav-tabs" style="font-weight: bold;">
+                <li class="nav-item">
+                    <a class="nav-link active text-dark" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">DEKSRIPSI</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion" type="button" role="tab" aria-controls="discussion" aria-selected="false">DISKUSI</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">ULASAN</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">PROFIL TOKO</a>
+                </li>
+             </ul>
+             <div class="tab-content" id="myTabContent" style="padding: 10px;">
+                 <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">{{ product.description|linebreaks }}</div>
+                 <div class="tab-pane fade" id="discussion" role="tabpanel" aria-labelledby="discussion-tab">...</div>
+                 <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">...</div>
+                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">DjangoEcommerce</div>
+             </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% if breadcrumbs_total > 1 %}
+    <div class="container bg-light" style="border: 1px solid #ece8e8; border-radius: 5px; margin-top: 5px; margin-bottom: 15px;">
+        <div class="row">
+            <nav aria-label="breadcrumb" style="margin-top: 5px;">
+                <ol class="breadcrumb">
+                {% for url, label in breadcrumbs %}
+                    {% if not url or forloop.counter == breadcrumbs_total %}
+                        <li class="breadcrumb-item{% if forloop.counter == breadcrumbs_total %} active{% endif %}" {% if forloop.counter == breadcrumbs_total %}aria-current="page"{% endif %}>{{ label|safe }}</li>
+                    {% else %}
+                        <li class="breadcrumb-item"><a href="{{ url }}">{{ label|safe }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endif %}
