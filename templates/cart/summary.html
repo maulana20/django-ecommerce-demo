@@ -13,28 +13,28 @@
 
 {% block content %}
     <div class="container">
-        <h1 class="h5">Shopping cart</h1>
+        <h1 class="h5">Shopping Cart</h1>
         {% for item in cart %}
              {% with product=item.product %}
              <div data-index="{{ product.id }}" class="row mb-4 border product-item">
                  <div class="col-md-3 col-lg-2 order-md-first bg-light">
-                     <img class="img-fluid mx-auto d-block" width="120px" alt="Responsive image" src="{{ product.image.url }}">
+                     <div style="height: 160px; width: auto; background-image: url('{{ product.image.url }}'); background-size: cover;"></div>
                  </div>
                  <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
                      <a href="{{ product.get_absolute_url }}" class="text-decoration-none text-reset">
                          <h1 class="h5 pt-2">{{ product.title }}</h1>
                      </a>
-                     <div class="border">
+                     <div>
                          <div class="col border-bottom">
                              <div class="row p-3">
-                                 <div class="col-6">Harga</div>
-                                 <div class="col-6 text-end"><span class="h6 fw-bold">Rp {% load humanize %} {{ product.price|intcomma }}</span></div>
+                                 <div class="col-6">Total</div>
+                                 <div class="col-6 text-end"><span class="h6 fw-bold">Rp <div id="item-total-{{ product.id }}" class="d-inline-flex">{% load mathfilters %} {{ product.price|mul:item.qty }}</div></span></div>
                              </div>
                          </div>
                          <div class="col">
                              <div class="row p-3">
                                  <div class="col-6">
-                                     <label for="select">Jumlah</label>
+                                     <!--label for="select">Jumlah</label>
                                      &nbsp;
                                      <select id="select{{ product.id }}">
                                          {% with select_array='1 2 3 4' %}
@@ -42,10 +42,22 @@
                                                  <option {% if i == item.qty|stringformat:".0f" %} selected="selected" {% endif %}>{{ i }}</option>
                                              {% endfor %}
                                          {% endwith %}
-                                     </select>
+                                     </select-->
+                                     <div class="row">
+                                         <div class="col-md-6">
+                                         <div class="h6" style="margin-top: 5px;">Rp <div id="item-price-{{ product.id }}" class="d-inline-flex">{% load humanize %}{{ product.price|intcomma }}</div></div>
+                                         </div>
+                                         <div class="col-md-6">
+                                         <div style="border: 1px solid #e0e0e0; white-space: nowrap; width: 120px;">
+                                             <button style="cursor: pointer; padding: 5px; display: inline-block; width: 25px; text-align: center; border: none; background: white; outline: none;" onclick="increase('{{ product.id }}')">+</button>
+                                             <div style="display: inline-block; padding: 5px; border-left: 1px solid #e0e0e0; border-right: 1px solid #e0e0e0; width: 60px; text-align: center;" id="item-qty-{{ product.id }}">{{ item.qty }}</div>
+                                             <button style="cursor: pointer; padding: 5px; display: inline-block; width: 20px; text-align: center; border: none; background: white; outline: none;" onclick="decrease('{{ product.id }}')">-</button>
+                                         </div>
+                                         </div>
+                                     </div>
                                  </div>
                                  <div class="col-6 text-end">
-                                     <button type="button" id="update-button" data-index="{{ product.id }}" class="btn btn-outline-secondary btn-sm update-button">Update</button>
+                                     <!--button type="button" id="update-button" data-index="{{ product.id }}" class="btn btn-outline-secondary btn-sm update-button">Update</button-->
                                      <button type="button" id="delete-button" data-index="{{ product.id }}" class="btn btn-outline-secondary btn-sm delete-button">Delete</button>
                                  </div>
                              </div>
@@ -56,7 +68,7 @@
              {% endwith %}
         {% endfor %}
         <div class="col-12 text-end">
-            <div class="h6 fw-bold">Sub Total: Rp <div id="subtotal" class="d-inline-flex">{% load humanize %} {{ cart.get_total_price|intcomma }}</div></div>
+            <div class="h5 fw-bold">Total Rp <div id="subtotal" class="d-inline-flex">{% load humanize %} {{ cart.get_total_price|intcomma }}</div></div>
         </div>
     </div>
     <script>
@@ -75,7 +87,7 @@
                 success: function (json) {
                     $('.product-item[data-index="' + prodid + '"]').remove();
                     document.getElementById("subtotal").innerHTML = json.subtotal;
-                    document.getElementById("basket-qty").innerHTML = json.qty
+                    document.getElementById("cart-qty").innerHTML = json.qty
                 },
                 error: function (xhr, errmsg, err) {}
             });
@@ -95,11 +107,62 @@
                     action: 'post'
                 },
                 success: function (json) {
-                    document.getElementById("basket-qty").innerHTML = json.qty
+                    document.getElementById("cart-qty").innerHTML = json.qty
                     document.getElementById("subtotal").innerHTML = json.subtotal
                 },
                 error: function (xhr, errmsg, err) {}
             });
         })
+        
+        function increase(id) {
+            var qty = parseInt(document.getElementById('item-qty-' + id).innerHTML)
+            var price = Number(document.getElementById('item-price-' + id).innerHTML.replace(/[^0-9.-]+/g,""))
+            
+            qty = qty >= 4 ? 4 : qty + 1
+            
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart:cart_update" %}',
+                data: {
+                    productid: id,
+                    productqty: qty,
+                    csrfmiddlewaretoken: "{{csrf_token}}",
+                    action: 'post'
+                },
+                success: function (json) {
+                    document.getElementById('item-qty-' + id).innerHTML = qty
+                    document.getElementById('item-total-' + id).innerHTML = (new Intl.NumberFormat('id-ID').format(price * qty)).split(".").join(",") + '.0'
+                    
+                    document.getElementById("cart-qty").innerHTML = json.qty
+                    document.getElementById("subtotal").innerHTML = (new Intl.NumberFormat('id-ID').format(json.subtotal)).split(".").join(",") + '.0'
+                },
+                error: function (xhr, errmsg, err) {}
+            });
+        }
+        
+        function decrease(id) {
+            var qty = parseInt(document.getElementById('item-qty-' + id).innerHTML)
+            var price = Number(document.getElementById('item-price-' + id).innerHTML.replace(/[^0-9.-]+/g,""))
+            
+            qty = qty == 1 ? qty : qty - 1
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart:cart_update" %}',
+                data: {
+                    productid: id,
+                    productqty: qty,
+                    csrfmiddlewaretoken: "{{csrf_token}}",
+                    action: 'post'
+                },
+                success: function (json) {
+                    document.getElementById('item-qty-' + id).innerHTML = qty
+                    document.getElementById('item-total-' + id).innerHTML = (new Intl.NumberFormat('id-ID').format(price * qty)).split(".").join(",") + '.0'
+                    
+                    document.getElementById("cart-qty").innerHTML = json.qty
+                    document.getElementById("subtotal").innerHTML = (new Intl.NumberFormat('id-ID').format(json.subtotal)).split(".").join(",") + '.0'
+                },
+                error: function (xhr, errmsg, err) {}
+            });
+        }
     </script>
 {% endblock %}

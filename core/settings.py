@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django_bootstrap_breadcrumbs',
     'django.contrib.humanize',
     'cart',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
