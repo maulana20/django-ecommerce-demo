@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'store',
     'django_bootstrap_breadcrumbs',
     'django.contrib.humanize',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processors.categories',
                 'django.template.context_processors.request',
+                'cart.context_processors.cart',
             ],
         },
     },

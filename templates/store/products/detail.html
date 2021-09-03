@@ -1,4 +1,4 @@
-{% extends "store/base.html" %}
+{% extends "core/base.html" %}
 {% load static %}
 
 {% block title %}
@@ -50,7 +50,7 @@
                                     <option value="">4</option>
                                 </select>
                             </div>
-                            <div class="col-6 text-end"><button type="button" class="btn btn-secondary btn-sm">Add tobasket</button></div>
+                            <div class="col-6 text-end"><button type="button" id="add-button" value="{{product.id}}" class="btn btn-secondary btn-sm">Add tobasket</button></div>
                         </div>
                     </div>
                 </div>
@@ -79,4 +79,23 @@
              </div>
         </div>
     </div>
+    <script>
+        $(document).on('click', '#add-button', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart:cart_add" %}',
+                data: {
+                    productid: $('#add-button').val(),
+                    productqty: $('#select option:selected').text(),
+                    csrfmiddlewaretoken: "{{csrf_token}}",
+                    action: 'post'
+                },
+                success: function (json) {
+                   document.getElementById("cart-qty").innerHTML = json.qty
+                },
+                error: function (xhr, errmsg, err) {}
+            });
+        })
+    </script>
 {% endblock %}
