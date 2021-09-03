@@ -7,7 +7,7 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 
 ### Instalasi
 
-1.  `$ git clone https://github.com/maulana20/laravel-pwa-demo`
+1.  `$ git clone https://github.com/maulana20/django-ecommerce-demo`
 2.  `$ python -m venv env`
 3.  `$ source env/bin/active` untuk `linux` `$ env\Scripts\activate` untuk `windows`
 4.  `$ pip install --upgrade pip setuptools`
