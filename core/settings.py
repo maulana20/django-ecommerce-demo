@@ -28,11 +28,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store',
     'django_bootstrap_breadcrumbs',
     'django.contrib.humanize',
-    'cart',
     'mathfilters',
+    'store',
+    'cart',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -58,8 +59,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'store.context_processors.categories',
                 'django.template.context_processors.request',
+                'store.context_processors.categories',
                 'cart.context_processors.cart',
             ],
         },
@@ -128,3 +129,19 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+AUTH_USER_MODEL = 'account.User'
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login'
+
+# Email setting
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_PORT = '2525'
+EMAIL_HOST_USER = 'user'
+EMAIL_HOST_PASSWORD = 'pass'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

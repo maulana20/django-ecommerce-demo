@@ -1,0 +1,77 @@
+from django.shortcuts import render, redirect
+
+from django.contrib.auth import login, logout
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.decorators import login_required
+
+from django.http import HttpResponse
+
+from django.template.loader import render_to_string
+
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+
+from django.core.mail import send_mail
+
+from .forms import RegistrationForm
+from .tokens import account_activation_token
+
+from .models import User
+
+@login_required
+def dashboard(request):
+    return render(request, 'account/dashboard.html', {'section': 'profile'})
+
+def account_register(request):
+    
+    if request.user.is_authenticated:
+        return redirect('account:dashboard')
+    
+    if request.method == 'POST':
+        
+        registerForm = RegistrationForm(request.POST)
+        
+        if registerForm.is_valid():
+            
+            user = registerForm.save(commit=False)
+            user.email = registerForm.cleaned_data['email']
+            user.set_password(registerForm.cleaned_data['password'])
+            user.is_active = False
+            
+            user.save()
+            
+            send_mail(
+                'Activate your Account',
+                render_to_string('account/auth/confirm_email.html', {
+                    'user': user,
+                    'domain': get_current_site(request).domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                }),
+                'djangoecommerce@example.com',
+                [user.email],
+                fail_silently=False,
+            )
+            
+            return HttpResponse('registered succesfully and activation sent')
+    else:
+        registerForm = RegistrationForm()
+    
+    return render(request, 'account/auth/register.html', {'form': registerForm})
+
+def account_verify(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, user.DoesNotExist):
+        user = None
+    
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        
+        login(request, user)
+        
+        return redirect('account:dashboard')
+    
+    return render(request, 'account/auth/verify_invalid.html')
