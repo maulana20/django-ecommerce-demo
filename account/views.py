@@ -22,6 +22,22 @@ from .models import UserBase
 def dashboard(request):
     return render(request, 'account/dashboard.html', {'section': 'profile'})
 
+@login_required
+def account_edit(request):
+    
+    if request.method == 'POST':
+        editForm = UserEditForm(instance=request.user, data=request.POST)
+        
+        if editForm.is_valid():
+            user = UserBase.objects.get(id=request.user.id)
+            user.full_name = request.POST['full_name']
+            
+            user.save()
+    else:
+        editForm = UserEditForm(instance=request.user)
+    
+    return render(request, 'account/edit.html', {'form': editForm})
+
 def account_register(request):
     
     if request.user.is_authenticated:
@@ -42,7 +58,7 @@ def account_register(request):
             
             send_mail(
                 'Activate your Account',
-                render_to_string('account/auth/confirm_email.html', {
+                render_to_string('email/auth/confirm_email.html', {
                     'user': user,
                     'domain': get_current_site(request).domain,
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -57,7 +73,7 @@ def account_register(request):
     else:
         registerForm = RegistrationForm()
     
-    return render(request, 'account/auth/register.html', {'registerForm': registerForm})
+    return render(request, 'account/auth/register.html', {'form': registerForm})
 
 def account_verify(request, uidb64, token):
     
@@ -76,18 +92,3 @@ def account_verify(request, uidb64, token):
         return redirect('account:dashboard')
     
     return render(request, 'account/auth/verify_invalid.html')
-
-def account_edit(request):
-    
-    if request.method == 'POST':
-        editForm = UserEditForm(instance=request.user, data=request.POST)
-        
-        if editForm.is_valid():
-            user = UserBase.objects.get(id=request.user.id)
-            user.full_name = request.POST['full_name']
-            
-            user.save()
-    else:
-        editForm = UserEditForm(instance=request.user)
-    
-    return render(request, 'account/edit.html', {'editForm': editForm})

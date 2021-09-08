@@ -23,31 +23,19 @@
                 <form class="account-form px-4 pt-4" action="{% url "account:edit" %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     
-                    {% if editForm.is_valid %}
+                    {% if form.is_valid %}
                         <div class="alert alert-primary" role="alert">
                             Successfully updated!
                         </div>
-                        <p class="small text-center pt-0">
-                            <a href="{% url "account:dashboard" %}">Back to Dashboard</a>
-                        </p>
                     {% endif %}
                     
-                    {% if editForm.errors %}
-                        <p>Please correct the following errors:</p>
-                        {% for field in editForm %}
-                            {% if field.errors %}
-                                <div class="alert alert-primary" role="alert">
-                                    {{ field.label }}: {{ field.errors|striptags }}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
+                    {% include 'core/validation-errors.html' %}
                     
-                    <label class="small font-weight-bold">{{ editForm.email.label}}</label>
-                    {{ editForm.email }}
+                    <label class="small font-weight-bold">{{ form.email.label}}</label>
+                    {{ form.email }}
                     
-                    <label class="small font-weight-bold">{{ editForm.full_name.label}}</label>
-                    {{ editForm.full_name }}
+                    <label class="small font-weight-bold">{{ form.full_name.label}}</label>
+                    {{ form.full_name }}
                     
                     <button class="btn btn-primary btn-block py-2 mb-4 mt-5 fw-bold w-100" type="submit" value="Save changes">Save Changes</button>
                     

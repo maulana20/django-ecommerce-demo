@@ -26,16 +26,7 @@
                     {% csrf_token %}
                     <h3 class="mb-4">Sign In</h3>
                     
-                    {% if form.errors %}
-                        <p>Please correct the following errors:</p>
-                        {% for field in form %}
-                            {% if field.errors %}
-                                <div class="alert alert-primary" role="alert">
-                                    {{ field.label }}: {{ field.errors|striptags }}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
+                    {% include 'core/validation-errors.html' %}
                     
                     {{ form.username.errors }}
                     <label class="form-label">{{ form.username.label }}</label>

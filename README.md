@@ -25,5 +25,14 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 ##### detail
 ![detail](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/detail.png)
 
+##### register
+![register](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/register.png)
+
+##### login
+![login](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/login.png)
+
+##### dashboard
+![dashboard](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/dashboard.png)
+
 ##### cart
 ![cart](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/cart.png)

@@ -1,16 +1,17 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import login_required
 
 from store.models import Product
 
 from .cart import Cart
 
-
+@login_required
 def cart_summary(request):
     cart = Cart(request)
     return render(request, 'cart/summary.html', {'cart': cart})
 
-
+@login_required
 def cart_add(request):
     cart = Cart(request)
     if request.POST.get('action') == 'post':
@@ -23,7 +24,7 @@ def cart_add(request):
         response = JsonResponse({'qty': qty})
         return response
 
-
+@login_required
 def cart_delete(request):
     cart = Cart(request)
     if request.POST.get('action') == 'post':
@@ -35,7 +36,7 @@ def cart_delete(request):
         response = JsonResponse({'qty': qty, 'subtotal': total})
         return response
 
-
+@login_required
 def cart_update(request):
     cart = Cart(request)
     if request.POST.get('action') == 'post':
