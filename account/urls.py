@@ -14,4 +14,6 @@ urlpatterns = [
     path('verify-email/<slug:uidb64>/<slug:token>)', views.account_verify, name='verify-email'),
     
     path('dashboard', views.dashboard, name='dashboard'),
+    
+    path('edit', views.account_edit, name='edit'),
 ]

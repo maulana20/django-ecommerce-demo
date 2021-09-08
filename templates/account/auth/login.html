@@ -27,14 +27,19 @@
                     <h3 class="mb-4">Sign In</h3>
                     
                     {% if form.errors %}
-                        <div class="alert alert-primary" role="alert">
-                            {{ form.non_field_errors }}
-                        </div>
+                        <p>Please correct the following errors:</p>
+                        {% for field in form %}
+                            {% if field.errors %}
+                                <div class="alert alert-primary" role="alert">
+                                    {{ field.label }}: {{ field.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
                     
-                    {{ form.user_name.errors }}
-                    <label class="form-label">{{ form.user_name.label }}</label>
-                    {{ form.user_name }}
+                    {{ form.username.errors }}
+                    <label class="form-label">{{ form.username.label }}</label>
+                    {{ form.username }}
                     
                     {{ form.password.errors }}
                     <label class="form-label">{{ form.password.label }}</label>

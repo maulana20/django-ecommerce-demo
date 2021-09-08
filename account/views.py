@@ -13,10 +13,10 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from django.core.mail import send_mail
 
-from .forms import RegistrationForm
+from .forms import (RegistrationForm, UserEditForm)
 from .tokens import account_activation_token
 
-from .models import User
+from .models import UserBase
 
 @login_required
 def dashboard(request):
@@ -57,12 +57,13 @@ def account_register(request):
     else:
         registerForm = RegistrationForm()
     
-    return render(request, 'account/auth/register.html', {'form': registerForm})
+    return render(request, 'account/auth/register.html', {'registerForm': registerForm})
 
 def account_verify(request, uidb64, token):
+    
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
+        user = UserBase.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
     
@@ -75,3 +76,18 @@ def account_verify(request, uidb64, token):
         return redirect('account:dashboard')
     
     return render(request, 'account/auth/verify_invalid.html')
+
+def account_edit(request):
+    
+    if request.method == 'POST':
+        editForm = UserEditForm(instance=request.user, data=request.POST)
+        
+        if editForm.is_valid():
+            user = UserBase.objects.get(id=request.user.id)
+            user.full_name = request.POST['full_name']
+            
+            user.save()
+    else:
+        editForm = UserEditForm(instance=request.user)
+    
+    return render(request, 'account/edit.html', {'editForm': editForm})

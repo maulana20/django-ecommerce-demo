@@ -130,7 +130,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'account.UserBase'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/account/dashboard'
