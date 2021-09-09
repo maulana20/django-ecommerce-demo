@@ -50,7 +50,7 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['user_name']
 
     class Meta:
-        verbose_name_plural = "accounts"
+        verbose_name_plural = "users"
     
     def __str__(self):
         return self.user_name

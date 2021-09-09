@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from django.contrib.auth import login, logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
 
@@ -13,7 +13,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from django.core.mail import send_mail
 
-from .forms import (RegistrationForm, UserEditForm)
+from .forms import (RegistrationForm, UserEditForm, UserLoginForm)
 from .tokens import account_activation_token
 
 from .models import UserBase
@@ -37,6 +37,27 @@ def account_edit(request):
         editForm = UserEditForm(instance=request.user)
     
     return render(request, 'account/edit.html', {'form': editForm})
+
+def account_login(request):
+    
+    if request.method == 'POST':
+        loginForm = UserLoginForm(request.POST)
+        
+        if loginForm.is_valid():
+            user = authenticate(request, email=request.POST["email"], password=request.POST["password"])
+            
+            if user:
+                if user.is_superuser == True:
+                    loginForm.add_error(None, 'Not for admin!')
+                else:
+                    login(request, user)
+                    return redirect('account:dashboard')
+            else:
+                loginForm.add_error(None, 'Error: Username or Password not correct!')
+    else:
+        loginForm = UserLoginForm()
+    
+    return render(request, 'account/auth/login.html', {'form': loginForm})
 
 def account_register(request):
     

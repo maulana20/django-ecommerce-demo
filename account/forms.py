@@ -3,16 +3,16 @@ from django.contrib.auth.forms import (AuthenticationForm)
 
 from .models import UserBase
 
-class UserLoginForm(AuthenticationForm):
+class UserLoginForm(forms.Form):
     
-    username = forms.EmailField(label='Email', min_length=5, max_length=50)
+    email = forms.EmailField(label='Email', min_length=5, max_length=50)
     password = forms.CharField(label='Password', min_length=5, max_length=50, widget=forms.PasswordInput())
     
     def __init__(self, *args, **kwargs):
         
         super().__init__(*args, **kwargs)
         
-        self.fields['username'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'Email', 'id': 'login-username'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'Email', 'id': 'login-username'})
         self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Password', 'id': 'login-pwd',})
 
 class RegistrationForm(forms.ModelForm):
