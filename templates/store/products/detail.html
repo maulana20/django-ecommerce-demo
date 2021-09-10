@@ -73,7 +73,39 @@
              </ul>
              <div class="tab-content" id="myTabContent" style="padding: 10px;">
                  <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">{{ product.description|linebreaks }}</div>
-                 <div class="tab-pane fade" id="discussion" role="tabpanel" aria-labelledby="discussion-tab">...</div>
+                 <div class="tab-pane fade" id="discussion" role="tabpanel" aria-labelledby="discussion-tab">
+                     <label class="h4">Punya pertanyaan seputar produk?</label>
+                     <br>
+                     <div class="row">
+                         <div class="col-sm-12 col-lg-9">
+                             <textarea rows="5" class="form-control" placeholder="Ajukan pertanyaan .." style="padding: 8px 12px;" id="comment"></textarea>
+                         </div>
+                     </div>
+                     <br>
+                     <div class="row">
+                         <div class="col-sm-12 col-lg-9 d-flex justify-content-end">
+                             <button class="btn btn-success btn-sm">Kirim Pertanyaan</button>
+                         </div>
+                     </div>
+                     <br>
+                     {% if product.comments.count %}
+                         {% for comment in product.comments.all %}
+                             <div class="col-sm-12 col-lg-9 border" style="padding: 10px; margin: 10px 0 10px 0;">
+                                 <div class="d-flex bd-highlight">
+                                     <div class="flex-grow-1 bd-highlight">
+                                         <span class="fw-bold">{{ comment.user.user_name }}</span>
+                                     </div>
+                                     <div class="bd-highlight">
+                                         <span class="text-muted font-weight-normal">{{ comment.created }}</span>
+                                     </div>
+                                 </div>
+                                 <p>
+                                     {{ comment.body | linebreaks }}
+                                 </p>
+                             </div>
+                         {% endfor %}
+                     {% endif %}
+                 </div>
                  <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">...</div>
                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">DjangoEcommerce</div>
              </div>

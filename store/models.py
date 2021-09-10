@@ -7,7 +7,6 @@ class ProductManager(models.Manager):
     def get_queryset(self):
         return super(ProductManager, self).get_queryset().filter(is_active=True, in_stock=True)
 
-
 class Category(models.Model):
     name = models.CharField(max_length=255, db_index=True)
     slug = models.SlugField(max_length=255, unique=True)
@@ -21,23 +20,26 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='product_creator')
+    
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255, default='admin')
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='images/')
     slug = models.SlugField(max_length=255, unique=True)
     price = models.FloatField()
+    
     in_stock = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
+    
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    
     objects = models.Manager()
     products = ProductManager()
-
+    
     class Meta:
         verbose_name_plural = 'products'
         ordering = ('-created',)
@@ -47,3 +49,18 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
+    
+    body = models.TextField(max_length=500, blank=True)
+    
+    created = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name_plural = 'discussions'
+        ordering = ('created',)
+    
+    def __str__(self):
+        return 'Comment {} by {}' . format(self.body, self.user.user_name)
