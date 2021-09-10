@@ -13,8 +13,14 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 4.  `$ pip install --upgrade pip setuptools`
 5.  `$ pip install -r requirements.txt`
 6.  `$ python manage.py migrate`
-7.  `$ python manage.py createsuperuser` email: admin@example.com, user : admin, pass : 12345
-8.  `$ python manage.py runserver`
+7.  `$ python manage.py loaddata seed/001_account.json`
+8.  `$ python manage.py loaddata seed/002_store.json`
+9.  `$ python manage.py runserver`
+
+#### admin :
+`http://localhost:8000/admin`
+- email : admin@example.com
+- password : 12345
 
 #### note :
 - setup config : `core/settings.py`
@@ -40,3 +46,6 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 
 ##### cart
 ![cart](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/cart.png)
+
+##### discussion
+![discussion](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/discussion.png)

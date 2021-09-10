@@ -1,0 +1,56 @@
+[
+{
+    "model": "store.category",
+    "pk": 1,
+    "fields": {
+        "name": "FOOD",
+        "slug": "food"
+    }
+},
+{
+    "model": "store.category",
+    "pk": 2,
+    "fields": {
+        "name": "CLOTHES",
+        "slug": "clothes"
+    }
+},
+{
+    "model": "store.product",
+    "pk": 1,
+    "fields": {
+        "category": 2,
+        "created_by": 1,
+        "title": "READY KAOS TSHIRT BEARDED",
+        "author": "admin",
+        "description": "READY KAOS TSHIRT BEARDED\r\n\r\n\r\n\r\nBahan kaos terbuat dari cotton 100% berkualitas , nyaman dan tidak panas saat dipakai. Bahan sablon terbuat dari polyflex timbul yang lentur, fleksibel, dan tidak akan pecah/rusak/luntur meski dicuci berkali-kali.\r\n\r\n\r\n\r\nTersedia dalam ukuran XS,S, M, L, XL, 2XL\r\n\r\nESTIMASI SIZE\r\n\r\nXS:Lebar dada 41cm - Tinggi 60 cm\r\n\r\nS :Lebar dada 44 cm - Tinggi 63 cm\r\n\r\nM :Lebar dada 47 cm - Tinggi 66 cm\r\n\r\nL :Lebar dada 50 cm - Tinggi 69 cm\r\n\r\nXL :Lebar dada 53 cm - Tinggi 72 cm\r\n\r\n2XL:Lebar dada 56 cm - Tinggi 74 cm\r\n\r\n\r\n\r\nPILIHAN WARNA:\r\n\r\nKaos: hitam, putih,\r\n\r\n\r\n\r\n\r\n\r\n* ReadyStock & Siap Kirim dalam 1x24 jam",
+        "image": "images/READY_KAOS_TSHIRT_BEARDED_.jpg",
+        "slug": "ready-kaos-tshirt-bearded",
+        "price": 70000.0,
+        "in_stock": true,
+        "is_active": true,
+        "created": "2021-09-10T13:47:09.127Z",
+        "updated": "2021-09-10T13:47:09.127Z"
+    }
+},
+{
+    "model": "store.comment",
+    "pk": 1,
+    "fields": {
+        "user": 3,
+        "product": 1,
+        "body": "bisa di kirim luar jabodetabek kak ?",
+        "created": "2021-09-08T20:47:59Z"
+    }
+},
+{
+    "model": "store.comment",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "product": 1,
+        "body": "barang ready gan ?",
+        "created": "2021-09-09T20:49:58Z"
+    }
+}
+]

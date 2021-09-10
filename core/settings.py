@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django_bootstrap_breadcrumbs',
     'django.contrib.humanize',
     'mathfilters',
+    'django_seed',
     'store',
     'cart',
     'account',
