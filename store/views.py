@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 
+from .forms import CommentForm
 from .models import Category, Product
 
 def all_products(request):
@@ -13,7 +14,25 @@ def category_list(request, category_slug=None):
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, in_stock=True)
-    return render(request, 'store/products/detail.html', {'product': product})
+    
+    if request.method == 'POST':
+        
+        commentForm = CommentForm(data=request.POST)
+        
+        if request.user.is_anonymous == True:
+            commentForm.add_error(None, 'You must to login first!')
+        else:
+            if commentForm.is_valid():
+                comment = commentForm.save(commit=False)
+                comment.product = product
+                comment.user = request.user
+                
+                comment.save()
+                commentForm = CommentForm()
+    else:
+        commentForm = CommentForm()
+    
+    return render(request, 'store/products/detail.html', {'product': product, 'form': commentForm})
 
 def page_not_found_view(request, exception):
     return render(request, 'core/404.html', status=404)

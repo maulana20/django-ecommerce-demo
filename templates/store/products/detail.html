@@ -74,20 +74,25 @@
              <div class="tab-content" id="myTabContent" style="padding: 10px;">
                  <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">{{ product.description|linebreaks }}</div>
                  <div class="tab-pane fade" id="discussion" role="tabpanel" aria-labelledby="discussion-tab">
-                     <label class="h4">Punya pertanyaan seputar produk?</label>
-                     <br>
-                     <div class="row">
-                         <div class="col-sm-12 col-lg-9">
-                             <textarea rows="5" class="form-control" placeholder="Ajukan pertanyaan .." style="padding: 8px 12px;" id="comment"></textarea>
+                     <form action="{% url "store:product_detail" product.slug %}" method="post" enctype="multipart/form-data">
+                         {% csrf_token %}
+                         
+                         {% include 'core/validation-errors.html' %}
+                         
+                         <div class="row">
+                             <div class="col-sm-12 col-lg-9">
+                                 <label class="h4">{{ form.body.label}}</label>
+                                 {{ form.body }}
+                             </div>
                          </div>
-                     </div>
-                     <br>
-                     <div class="row">
-                         <div class="col-sm-12 col-lg-9 d-flex justify-content-end">
-                             <button class="btn btn-success btn-sm">Kirim Pertanyaan</button>
+                         <br>
+                         <div class="row">
+                             <div class="col-sm-12 col-lg-9 d-flex justify-content-end">
+                                 <button class="btn btn-success btn-sm">Kirim Pertanyaan</button>
+                             </div>
                          </div>
-                     </div>
-                     <br>
+                     </form>
+                     <br />
                      {% if product.comments.count %}
                          {% for comment in product.comments.all %}
                              <div class="col-sm-12 col-lg-9 border" style="padding: 10px; margin: 10px 0 10px 0;">
