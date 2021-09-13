@@ -98,7 +98,11 @@
                              <div class="col-sm-12 col-lg-9 border" style="padding: 10px; margin: 10px 0 10px 0;">
                                  <div class="d-flex bd-highlight">
                                      <div class="flex-grow-1 bd-highlight">
-                                         <span class="fw-bold">{{ comment.user.user_name }}</span>
+                                         {% if comment.user == None %}
+                                             <span class="fw-bold">anonim</span>
+                                         {% else %}
+                                             <span class="fw-bold">{{ comment.user.user_name }}</span>
+                                         {% endif %}
                                      </div>
                                      <div class="bd-highlight">
                                          <span class="text-muted font-weight-normal">{{ comment.created }}</span>

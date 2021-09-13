@@ -51,7 +51,7 @@ class Product(models.Model):
         return self.title
 
 class Comment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
     
     body = models.TextField(max_length=500, blank=True)

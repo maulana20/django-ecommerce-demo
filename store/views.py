@@ -19,16 +19,14 @@ def product_detail(request, slug):
         
         commentForm = CommentForm(data=request.POST)
         
-        if request.user.is_anonymous == True:
-            commentForm.add_error(None, 'You must to login first!')
-        else:
-            if commentForm.is_valid():
-                comment = commentForm.save(commit=False)
-                comment.product = product
-                comment.user = request.user
-                
-                comment.save()
-                commentForm = CommentForm()
+        if commentForm.is_valid():
+            comment = commentForm.save(commit=False)
+            comment.product = product
+            comment.user = None if request.user.is_anonymous == True else request.user
+            
+            comment.save()
+            
+            commentForm = CommentForm()
     else:
         commentForm = CommentForm()
     
