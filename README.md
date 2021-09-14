@@ -53,6 +53,9 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 ##### chat
 ![chat](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat.png)
 
+##### chat rest api
+![chat-rest-api](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat-rest-api.png)
+
 ##### reference :
 - [breadcrumbs](https://django-bootstrap-breadcrumbs.readthedocs.io/en/latest/)
 - [formatnumber](https://stackoverflow.com/questions/346467/format-numbers-in-django-templates)

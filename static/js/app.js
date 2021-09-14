@@ -4,7 +4,7 @@ let userList = $('#user-list');
 let messageList = $('#messages');
 
 function updateUserList() {
-    $.getJSON('api/v1/user/', function (data) {
+    $.getJSON('api/v1/user-inbox/', function (data) {
         userList.children('.user').remove();
         for (let i = 0; i < data.length; i++) {
             const userItem = `<a class="list-group-item user">${data[i]['user_name']}</a>`;

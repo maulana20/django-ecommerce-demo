@@ -6,8 +6,8 @@ from channels.layers import get_channel_layer
 
 class Message(models.Model):
     
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='user', related_name='from_user', db_index=True)
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='recipient', related_name='to_user', db_index=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='user', related_name='comments_from', db_index=True)
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='recipient', related_name='comments_to', db_index=True)
     
     body = models.TextField(max_length=500, blank=True)
     

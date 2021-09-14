@@ -10,7 +10,6 @@ from rest_framework.authentication import SessionAuthentication
 
 from chat.serializers import MessageModelSerializer, UserModelSerializer
 from chat.models import Message
-from account.models import UserBase
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     """
@@ -22,13 +21,11 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
     def enforce_csrf(self, request):
         return
 
-
 class MessagePagination(PageNumberPagination):
     """
     Limit message prefetch to one page.
     """
     page_size = settings.MESSAGES_TO_LOAD
-
 
 class MessageModelViewSet(ModelViewSet):
     queryset = Message.objects.all()
@@ -54,7 +51,6 @@ class MessageModelViewSet(ModelViewSet):
         
         return Response(serializer.data)
 
-
 class UserModelViewSet(ModelViewSet):
     queryset = get_user_model().objects.all()
     serializer_class = UserModelSerializer
@@ -67,3 +63,14 @@ class UserModelViewSet(ModelViewSet):
         self.queryset = self.queryset.exclude(id=request.user.id)
         
         return super(UserModelViewSet, self).list(request, *args, **kwargs)
+
+class InboxModelViewSet(ModelViewSet):
+    serializer_class = UserModelSerializer
+    
+    allowed_methods = ('GET', 'HEAD', 'OPTIONS')
+    pagination_class = None  # Get all user
+
+    def list(self, request, *args, **kwargs):
+        self.queryset = { comment.user for comment in request.user.comments_to.all() if comment.recipient != comment.user }
+        
+        return super(InboxModelViewSet, self).list(request, *args, **kwargs)
