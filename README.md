@@ -24,6 +24,7 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 
 #### note :
 - setup config : `core/settings.py`
+- run `redis-server`
 
 ##### home
 ![home](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/home.png)
@@ -49,6 +50,9 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 ##### discussion
 ![discussion](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/discussion.png)
 
+##### chat
+![chat](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat.png)
+
 ##### reference :
 - [breadcrumbs](https://django-bootstrap-breadcrumbs.readthedocs.io/en/latest/)
 - [formatnumber](https://stackoverflow.com/questions/346467/format-numbers-in-django-templates)
@@ -56,3 +60,4 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 - [seeder](https://medium.com/@ardho/migration-and-seeding-in-django-3ae322952111)
 - [customauth](https://kimmosaaskilahti.fi/blog/2021-04-18-django-custom-authentication/)
 - [comments](https://djangocentral.com/creating-comments-system-with-django/)
+- [chat](https://github.com/narrowfail/django-channels-chat)

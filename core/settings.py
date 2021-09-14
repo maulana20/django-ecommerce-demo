@@ -32,9 +32,12 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'mathfilters',
     'django_seed',
+    'rest_framework',
+    'channels',
     'store',
     'cart',
     'account',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +149,16 @@ EMAIL_HOST_USER = 'user'
 EMAIL_HOST_PASSWORD = 'pass'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+MESSAGES_TO_LOAD = 15
+
+# Channel chat setting
+ASGI_APPLICATION = 'core.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
