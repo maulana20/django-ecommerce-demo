@@ -150,6 +150,15 @@ EMAIL_HOST_PASSWORD = 'pass'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
+
 MESSAGES_TO_LOAD = 15
 
 # Channel chat setting
