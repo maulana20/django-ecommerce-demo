@@ -8,6 +8,7 @@ from account.models import UserBase
 class MessageModelSerializer(ModelSerializer):
     user = CharField(source='user.user_name', read_only=True)
     recipient = CharField(source='recipient.user_name')
+    shop_image = CharField(source='user.shop.image')
 
     def create(self, validated_data):
         user = self.context['request'].user
@@ -21,7 +22,7 @@ class MessageModelSerializer(ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ('id', 'user', 'recipient', 'created', 'body')
+        fields = ('id', 'user', 'recipient', 'shop_image', 'created', 'body')
 
 
 class UserModelSerializer(ModelSerializer):

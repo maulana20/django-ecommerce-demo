@@ -61,8 +61,11 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 ##### discussion
 ![discussion](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/discussion.png)
 
-##### chat
+##### chat shop
 ![chat](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat.png)
+
+##### chat user
+![chat-user](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat-user.png)
 
 ##### chat rest api
 ![chat-rest-api](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat-rest-api.png)

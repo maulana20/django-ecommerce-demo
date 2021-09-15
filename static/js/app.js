@@ -8,9 +8,9 @@ function drawMessage(message) {
     const date = new Date(message.created);
     if (message.user === currentUser) position = 'right';
     const messageItem = `
-            <li class="message ${position}">
-                <div class="avatar">${message.user}</div>
-                    <div class="text_wrapper">
+            <li class="message ${position}">`
+                + ( message.shop_image ? `<div class="avatar" style="background-image: url('/media/${message.shop_image}'); background-size: cover;"></div>` : `<div class="avatar">${message.user}</div>`) +
+                    `<div class="text_wrapper">
                         <div class="text">${message.body}<br>
                             <span class="small">${date}</span>
                     </div>

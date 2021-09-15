@@ -21,14 +21,18 @@
                 <h1 class="mb-0 h4">{{ product.title }}</h1>
                 <p><span class="lead">{{ product.author }}</span></p>
                 <!--p>{{ product.description|slice:":355" }}...</p-->
-                <div class="col-md-4" style="margin-bottom: 15px;">
+                <div class="col-md-12" style="margin-bottom: 15px;">
                     <div class="row">
-                        <div class="col-5">Kategori</div>
-                        <div class="col-7">: <a class="text-dark text-decoration-none" href="{% url 'store:category_list' product.category.slug %}">{{ product.category }}</a></div>
+                        <div class="col-12" class="float-left">
+                            <div class="justify-content-center">
+                                <div class="avatar" style="background-image: url('/media/{{product.created_by.shop.image}}'); background-size: cover; height: 50px; width: 50px; padding: 10px; border-radius: 50px;"></div>
+                                {{ product.created_by.shop.title }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-5">Nama Toko</div>
-                        <div class="col-7">: DjangoEcommerce</div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-2">Kategori</div>
+                        <div class="col-10">: <a class="text-dark text-decoration-none" href="{% url 'store:category_list' product.category.slug %}">{{ product.category }}</a></div>
                     </div>
                 </div>
                 <div class="border bg-light">
@@ -116,7 +120,16 @@
                      {% endif %}
                  </div>
                  <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">...</div>
-                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">DjangoEcommerce</div>
+                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                     <div class="row">
+                         <div class="col-12" class="float-left">
+                             <div class="justify-content-center">
+                                 <div class="avatar" style="background-image: url('/media/{{product.created_by.shop.image}}'); background-size: cover; height: 50px; width: 50px; padding: 10px; border-radius: 50px;"></div>
+                                 {{ product.created_by.shop.title }}
+                             </div>
+                         </div>
+                     </div>
+                 </div>
              </div>
         </div>
     </div>
