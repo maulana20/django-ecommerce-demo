@@ -3,22 +3,6 @@ let chatButton = $('#btn-send');
 let userList = $('#user-list');
 let messageList = $('#messages');
 
-function updateUserList() {
-    $.getJSON('api/v1/user-inbox/', function (data) {
-        userList.children('.user').remove();
-        for (let i = 0; i < data.length; i++) {
-            const userItem = `<a class="list-group-item user">${data[i]['user_name']}</a>`;
-            $(userItem).appendTo('#user-list');
-        }
-        $('.user').click(function () {
-            userList.children('.active').removeClass('active');
-            let selected = event.target;
-            $(selected).addClass('active');
-            setCurrentRecipient(selected.text);
-        });
-    });
-}
-
 function drawMessage(message) {
     let position = 'left';
     const date = new Date(message.created);
@@ -84,7 +68,13 @@ function disableInput() {
 }
 
 $(document).ready(function () {
-    updateUserList();
+    $('.user').click(function () {
+        userList.children('.active').removeClass('active');
+        let selected = event.target;
+        $(selected).addClass('active');
+        setCurrentRecipient(selected.id);
+    });
+    
     disableInput();
 
     var socket = new WebSocket('ws://' + window.location.host + '/ws?session_key=' + sessionKey)

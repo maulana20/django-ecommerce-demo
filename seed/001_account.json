@@ -52,5 +52,16 @@
         "groups": [],
         "user_permissions": []
     }
+},
+{
+    "model": "account.shop",
+    "pk": 1,
+    "fields": {
+        "user_id": 2,
+        "title": "TOKO ONLEN",
+        "image": "images/TOKO_ONLEN.png",
+        "created": "2021-09-15T13:47:09.127Z",
+        "updated": "2021-09-15T13:47:09.127Z"
+    }
 }
 ]

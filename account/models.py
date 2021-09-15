@@ -54,3 +54,18 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.user_name
+
+class Shop(models.Model):
+    user = models.OneToOneField(UserBase, related_name='shop', on_delete=models.CASCADE, primary_key=True)
+    
+    title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='images/')
+    
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name_plural = "shops"
+    
+    def __str__(self):
+        return self.title

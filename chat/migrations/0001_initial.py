@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'verbose_name_plural': 'messages',
-                'ordering': ('-created',),
+                'ordering': ('created',),
             },
         ),
     ]

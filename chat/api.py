@@ -63,14 +63,3 @@ class UserModelViewSet(ModelViewSet):
         self.queryset = self.queryset.exclude(id=request.user.id)
         
         return super(UserModelViewSet, self).list(request, *args, **kwargs)
-
-class InboxModelViewSet(ModelViewSet):
-    serializer_class = UserModelSerializer
-    
-    allowed_methods = ('GET', 'HEAD', 'OPTIONS')
-    pagination_class = None  # Get all user
-
-    def list(self, request, *args, **kwargs):
-        self.queryset = { comment.user for comment in request.user.comments_to.all() if comment.recipient != comment.user }
-        
-        return super(InboxModelViewSet, self).list(request, *args, **kwargs)

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from account.forms import CustomUserCreationForm, CustomUserChangeForm
-from account.models import UserBase
+from account.models import UserBase, Shop
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
@@ -24,3 +24,8 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
 admin.site.register(UserBase, CustomUserAdmin)
+
+@admin.register(Shop)
+class ShopAdmin(admin.ModelAdmin):
+    list_display = ['user', 'title', 'created']
+    search_fields = ['title']

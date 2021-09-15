@@ -1,0 +1,42 @@
+[
+{
+    "model": "chat.message",
+    "pk": 1,
+    "fields": {
+        "user": 3,
+        "recipient": 2,
+        "body": "apakah barang ini ready kak ?",
+        "created": "2021-09-15T10:14:15Z"
+    }
+},
+{
+    "model": "chat.message",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "recipient": 3,
+        "body": "ready kak silahkan di order",
+        "created": "2021-09-15T03:15:20.678Z"
+    }
+},
+{
+    "model": "chat.message",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "recipient": 2,
+        "body": "apakah ada pilihan warna lain kak ?",
+        "created": "2021-09-15T03:15:34.815Z"
+    }
+},
+{
+    "model": "chat.message",
+    "pk": 4,
+    "fields": {
+        "user": 2,
+        "recipient": 3,
+        "body": "kosong kak .. cuma pilihan wana silver saja",
+        "created": "2021-09-15T03:16:33.623Z"
+    }
+}
+]

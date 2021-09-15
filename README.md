@@ -15,11 +15,22 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 6.  `$ python manage.py migrate`
 7.  `$ python manage.py loaddata seed/001_account.json`
 8.  `$ python manage.py loaddata seed/002_store.json`
-9.  `$ python manage.py runserver`
+9.  `$ python manage.py loaddata seed/003_chat.json`
+10.  `$ python manage.py runserver`
 
 #### admin :
 `http://localhost:8000/admin`
 - email : admin@example.com
+- password : 12345
+
+#### shop :
+`http://localhost:8000/account/login`
+- email : maulana@example.com
+- password : 12345
+
+#### user :
+`http://localhost:8000/account/login`
+- email : saputra@example.com
 - password : 12345
 
 #### note :

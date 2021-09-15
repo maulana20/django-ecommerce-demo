@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Chat Inbox
+    Chat
 {% endblock %}
 
 {% block content %}
@@ -12,8 +12,14 @@
                 <div id="user-list" class="list-group">
                     <a href="" class="list-group-item disabled">
                         <label class="list-group-item-heading">Users</label>
-                        {# Users go here #}
                     </a>
+                    {% for user in users %}
+                        {% if user.shop %}
+                            <a class="list-group-item user" id="{{ user.user_name }}">{{ user.shop.title }} (shop)</a>
+                        {% else %}
+                            <a class="list-group-item user" id="{{ user.user_name }}">{{ user.user_name }}</a>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-md-8">
