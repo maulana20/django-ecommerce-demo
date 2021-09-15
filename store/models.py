@@ -3,6 +3,8 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 
+from account.models import Shop
+
 class ProductManager(models.Manager):
     def get_queryset(self):
         return super(ProductManager, self).get_queryset().filter(is_active=True, in_stock=True)
@@ -22,10 +24,9 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='product_creator')
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='products', blank=True, null=True)
     
     title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255, default='admin')
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='images/')
     slug = models.SlugField(max_length=255, unique=True)
