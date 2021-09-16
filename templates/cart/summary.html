@@ -71,98 +71,11 @@
             <div class="h5 fw-bold">Total Rp <div id="subtotal" class="d-inline-flex">{% load humanize %} {{ cart.get_total_price|intcomma }}</div></div>
         </div>
     </div>
+    
     <script>
-        // Delete Item
-        $(document).on('click', '.delete-button', function (e) {
-            e.preventDefault();
-            var prodid = $(this).data('index');
-            $.ajax({
-                type: 'POST',
-                url: '{% url "cart:cart_delete" %}',
-                data: {
-                    productid: $(this).data('index'),
-                    csrfmiddlewaretoken: "{{csrf_token}}",
-                    action: 'post'
-                },
-                success: function (json) {
-                    $('.product-item[data-index="' + prodid + '"]').remove();
-                    document.getElementById("subtotal").innerHTML = json.subtotal;
-                    document.getElementById("cart-qty").innerHTML = json.qty
-                },
-                error: function (xhr, errmsg, err) {}
-            });
-        })
-        
-        // Update Item
-        $(document).on('click', '.update-button', function (e) {
-            e.preventDefault();
-            var prodid = $(this).data('index');
-            $.ajax({
-                type: 'POST',
-                url: '{% url "cart:cart_update" %}',
-                data: {
-                    productid: $(this).data('index'),
-                    productqty: $('#select' + prodid + ' option:selected').text(),
-                    csrfmiddlewaretoken: "{{csrf_token}}",
-                    action: 'post'
-                },
-                success: function (json) {
-                    document.getElementById("cart-qty").innerHTML = json.qty
-                    document.getElementById("subtotal").innerHTML = json.subtotal
-                },
-                error: function (xhr, errmsg, err) {}
-            });
-        })
-        
-        function increase(id) {
-            var qty = parseInt(document.getElementById('item-qty-' + id).innerHTML)
-            var price = Number(document.getElementById('item-price-' + id).innerHTML.replace(/[^0-9.-]+/g,""))
-            
-            qty = qty >= 4 ? 4 : qty + 1
-            
-            $.ajax({
-                type: 'POST',
-                url: '{% url "cart:cart_update" %}',
-                data: {
-                    productid: id,
-                    productqty: qty,
-                    csrfmiddlewaretoken: "{{csrf_token}}",
-                    action: 'post'
-                },
-                success: function (json) {
-                    document.getElementById('item-qty-' + id).innerHTML = qty
-                    document.getElementById('item-total-' + id).innerHTML = (new Intl.NumberFormat('id-ID').format(price * qty)).split(".").join(",") + '.0'
-                    
-                    document.getElementById("cart-qty").innerHTML = json.qty
-                    document.getElementById("subtotal").innerHTML = (new Intl.NumberFormat('id-ID').format(json.subtotal)).split(".").join(",") + '.0'
-                },
-                error: function (xhr, errmsg, err) {}
-            });
-        }
-        
-        function decrease(id) {
-            var qty = parseInt(document.getElementById('item-qty-' + id).innerHTML)
-            var price = Number(document.getElementById('item-price-' + id).innerHTML.replace(/[^0-9.-]+/g,""))
-            
-            qty = qty == 1 ? qty : qty - 1
-            $.ajax({
-                type: 'POST',
-                url: '{% url "cart:cart_update" %}',
-                data: {
-                    productid: id,
-                    productqty: qty,
-                    csrfmiddlewaretoken: "{{csrf_token}}",
-                    action: 'post'
-                },
-                success: function (json) {
-                    document.getElementById('item-qty-' + id).innerHTML = qty
-                    document.getElementById('item-total-' + id).innerHTML = (new Intl.NumberFormat('id-ID').format(price * qty)).split(".").join(",") + '.0'
-                    
-                    document.getElementById("cart-qty").innerHTML = json.qty
-                    document.getElementById("subtotal").innerHTML = (new Intl.NumberFormat('id-ID').format(json.subtotal)).split(".").join(",") + '.0'
-                },
-                error: function (xhr, errmsg, err) {}
-            });
-        }
+        var urlCartUpdate = '{% url "cart:cart_update" %}'
+        var urlCartDelete = '{% url "cart:cart_delete" %}'
+        var csrfToken = "{{csrf_token}}"
     </script>
+    <script src="../static/js/cart-summary.js"></script>
 {% endblock %}

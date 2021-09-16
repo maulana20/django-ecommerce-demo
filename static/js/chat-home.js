@@ -6,37 +6,43 @@ let messageList = $('#messages');
 function drawMessage(message) {
     let position = 'left';
     const date = new Date(message.created);
+    
     if (message.user === currentUser) position = 'right';
+    
     const messageItem = `
-            <li class="message ${position}">`
-                + ( message.shop_image ? `<div class="avatar" style="background-image: url('/media/${message.shop_image}'); background-size: cover;"></div>` : `<div class="avatar">${message.user}</div>`) +
-                    `<div class="text_wrapper">
-                        <div class="text">${message.body}<br>
-                            <span class="small">${date}</span>
-                    </div>
+        <li class="message ${position}">`
+            + ( message.shop_image ? `<div class="avatar" style="background-image: url('/media/${message.shop_image}'); background-size: cover;"></div>` : `<div class="avatar">${message.user}</div>`) +
+                `<div class="text_wrapper">
+                    <div class="text">${message.body}<br>
+                        <span class="small">${date}</span>
                 </div>
-            </li>`;
+            </div>
+        </li>`;
+    
     $(messageItem).appendTo('#messages');
 }
 
 function getConversation(recipient) {
     $.getJSON(`api/v1/message/?target=${recipient}`, function (data) {
         messageList.children('.message').remove();
+        
         for (let i = data['results'].length - 1; i >= 0; i--) {
             drawMessage(data['results'][i]);
         }
+        
         messageList.animate({scrollTop: messageList.prop('scrollHeight')});
     });
-
 }
 
 function getMessageById(message) {
     id = JSON.parse(message).message
+    
     $.getJSON(`api/v1/message/${id}/`, function (data) {
-        if (data.user === currentRecipient ||
-            (data.recipient === currentRecipient && data.user == currentUser)) {
+        
+        if (data.user === currentRecipient || (data.recipient === currentRecipient && data.user == currentUser)) {
             drawMessage(data);
         }
+        
         messageList.animate({scrollTop: messageList.prop('scrollHeight')});
     });
 }
@@ -45,6 +51,8 @@ function sendMessage(recipient, body) {
     $.post('api/v1/message/', {
         recipient: recipient,
         body: body
+    }).done(function () {
+        console.log('success send');
     }).fail(function () {
         alert('Error! Check console!');
     });
@@ -52,6 +60,7 @@ function sendMessage(recipient, body) {
 
 function setCurrentRecipient(username) {
     currentRecipient = username;
+    
     getConversation(currentRecipient);
     enableInput();
 }
@@ -68,16 +77,17 @@ function disableInput() {
 }
 
 $(document).ready(function () {
+    
+    disableInput();
+    
     $('.user').click(function () {
         userList.children('.active').removeClass('active');
         let selected = event.target;
         $(selected).addClass('active');
         setCurrentRecipient(selected.id);
     });
-    
-    disableInput();
 
-    var socket = new WebSocket('ws://' + window.location.host + '/ws?session_key=' + sessionKey)
+    var socket = new WebSocket(`ws://` + window.location.host + `/ws?session_key=${sessionKey}`)
 
     chatInput.keypress(function (e) {
         if (e.keyCode == 13)

@@ -104,6 +104,8 @@
                                      <div class="flex-grow-1 bd-highlight">
                                          {% if comment.user == None %}
                                              <span class="fw-bold">anonim</span>
+                                         {% elif comment.user.shop %}
+                                             <span class="fw-bold">{{ comment.user.shop.title }}</span>
                                          {% else %}
                                              <span class="fw-bold">{{ comment.user.user_name }}</span>
                                          {% endif %}
@@ -133,23 +135,10 @@
              </div>
         </div>
     </div>
+    
     <script>
-        $(document).on('click', '#add-button', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: '{% url "cart:cart_add" %}',
-                data: {
-                    productid: $('#add-button').val(),
-                    productqty: $('#select option:selected').text(),
-                    csrfmiddlewaretoken: "{{csrf_token}}",
-                    action: 'post'
-                },
-                success: function (json) {
-                   document.getElementById("cart-qty").innerHTML = json.qty
-                },
-                error: function (xhr, errmsg, err) {}
-            });
-        })
+        var urlCartAdd = '{% url "cart:cart_add" %}';
+        var csrfToken = "{{csrf_token}}";  
     </script>
+    <script src="../static/js/store-products-detail.js"></script>
 {% endblock %}
