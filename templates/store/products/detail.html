@@ -131,19 +131,48 @@
                      <div class="row">
                          <div class="col-12" class="float-left">
                              <div class="justify-content-center">
-                                 <div class="avatar" style="background-image: url('/media/{{product.created_by.shop.image}}'); background-size: cover; height: 50px; width: 50px; padding: 10px; border-radius: 50px;"></div>
-                                 {{ product.created_by.shop.title }}
+                                 <div class="avatar" style="background-image: url('/media/{{product.shop.image}}'); background-size: cover; height: 50px; width: 50px; padding: 10px; border-radius: 50px;"></div>
+                                 {{ product.shop.title }}
                              </div>
                          </div>
                      </div>
                  </div>
              </div>
         </div>
+        
+        {% if user.is_authenticated and user != product.shop.user %}
+            <div class="chat-button" id="chat-button">chat shop</div>
+            <div class="row">
+                <div class="chat-box" id="chat-box" style="display: none;">
+                    <div class="chat-message">
+                        <div class="chat-message-header">
+                            <div class="chat-header-name">{{ product.shop.title }} <div class="shop-label">shop</div></div>
+                            <div class="chat-header-close">
+                                <button type="button" class="close" aria-label="Close" onclick="closeChat()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chat-message-content">
+                            <ul id="messages" class="messages">
+                            </ul>
+                        </div>
+                        <div class="chat-message-board">
+                            <input placeholder="Tulis pesan..." style="width: 100%; border: 1px solid #e5e7e9 !important; border-radius: 20px !important;" id="chat-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
     
     <script>
         var urlCartAdd = '{% url "cart:cart_add" %}';
-        var csrfToken = "{{csrf_token}}";  
+        var csrfToken = "{{ csrf_token }}";
+        
+        var sessionKey = '{{ request.session.session_key }}';
+        var currentUser = '{{ request.user.user_name }}';
+        var currentRecipient = '{{ product.shop.user.user_name }}';
     </script>
     <script src="../static/js/store-products-detail.js"></script>
 {% endblock %}
