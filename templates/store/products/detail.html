@@ -105,7 +105,12 @@
                                          {% if comment.user == None %}
                                              <span class="fw-bold">anonim</span>
                                          {% elif comment.user.shop %}
-                                             <span class="fw-bold">{{ comment.user.shop.title }}</span>
+                                             {% if comment.user.shop == product.shop %}
+                                                 <span class="fw-bold">{{ comment.user.shop.title }}</span>
+                                                 <div class="shop-label">shop</div>
+                                             {% else %}
+                                                 <span class="fw-bold">{{ comment.user.shop.title }}</span>
+                                             {% endif %}
                                          {% else %}
                                              <span class="fw-bold">{{ comment.user.user_name }}</span>
                                          {% endif %}
