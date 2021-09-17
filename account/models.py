@@ -1,6 +1,6 @@
+import uuid
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin)
 from django.db import models
-
 
 class CustomAccountManager(BaseUserManager):
     
@@ -32,7 +32,8 @@ class CustomAccountManager(BaseUserManager):
         return user
     
 class UserBase(AbstractBaseUser, PermissionsMixin):
-
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    
     email = models.EmailField(unique=True)
     user_name = models.CharField(max_length=150, unique=True)
     full_name = models.CharField(max_length=255, blank=True)

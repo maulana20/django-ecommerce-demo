@@ -11,7 +11,7 @@ function drawMessage(message) {
     
     const messageItem = `
         <li class="message ${position}">`
-            + ( message.shop_image ? `<div class="avatar" style="background-image: url('/media/${message.shop_image}'); background-size: cover;"></div>` : `<div class="avatar">${message.user}</div>`) +
+            + ( message.shop_image ? `<div class="avatar" style="background-image: url('/media/${message.shop_image}'); background-size: cover;"></div>` : `<div class="avatar">${message.full_name}</div>`) +
                 `<div class="text_wrapper">
                     <div class="text">${message.body}<br>
                         <span class="small">${date}</span>

@@ -15,9 +15,9 @@
                     </a>
                     {% for user in users %}
                         {% if user.shop %}
-                            <a class="list-group-item user" id="{{ user.user_name }}">{{ user.shop.title }} <div class="shop-label">shop</div></a>
+                            <a class="list-group-item user" id="{{ user.uuid }}">{{ user.shop.title }} <div class="shop-label">shop</div></a>
                         {% else %}
-                            <a class="list-group-item user" id="{{ user.user_name }}">{{ user.user_name }}</a>
+                            <a class="list-group-item user" id="{{ user.uuid }}">{{ user.user_name }}</a>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -44,7 +44,7 @@
     
     <script>
         var sessionKey = '{{ request.session.session_key }}';
-        var currentUser = '{{ request.user.user_name }}';  
+        var currentUser = '{{ request.user.uuid }}';  
     </script>
     <script src="../static/js/chat-home.js"></script>
 {% endblock %}

@@ -41,7 +41,7 @@ class MessageModelViewSet(ModelViewSet):
         target = self.request.query_params.get('target', None)
         
         if target is not None:
-            self.queryset = self.queryset.filter(Q(recipient=request.user, user__user_name=target) | Q(recipient__user_name=target, user=request.user))
+            self.queryset = self.queryset.filter(Q(recipient=request.user, user__uuid=target) | Q(recipient__uuid=target, user=request.user))
         
         return super(MessageModelViewSet, self).list(request, *args, **kwargs)
 

@@ -171,8 +171,8 @@
         var csrfToken = "{{ csrf_token }}";
         
         var sessionKey = '{{ request.session.session_key }}';
-        var currentUser = '{{ request.user.user_name }}';
-        var currentRecipient = '{{ product.shop.user.user_name }}';
+        var currentUser = '{{ request.user.uuid }}';
+        var currentRecipient = '{{ product.shop.user.uuid }}';
     </script>
     <script src="../static/js/store-products-detail.js"></script>
 {% endblock %}
