@@ -32,7 +32,7 @@ class RegistrationForm(forms.ModelForm):
     user_name = forms.CharField(label='Enter Username', min_length=5, max_length=50, help_text='Required')
     email = forms.EmailField(label='Enter Email', min_length=5, max_length=50, help_text='Required', error_messages={'required': 'Sorry, you will need an email'})
     password = forms.CharField(label='Password', min_length=5, max_length=50, widget=forms.PasswordInput)
-    confirm_password = forms.CharField(label='Confirm Password', min_length=5, max_length=50, widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirm Password', min_length=5, max_length=50, widget=forms.PasswordInput)
     
     class Meta:
         model = UserBase
@@ -47,13 +47,13 @@ class RegistrationForm(forms.ModelForm):
         
         return user_name
     
-    def clean_confirmpassword(self):
+    def clean_password2(self):
         cd = self.cleaned_data
         
-        if cd['password'] != cd['confirm_password']:
+        if cd['password'] != cd['password2']:
             raise forms.ValidationError('Confirm Password do not match.')
         
-        return cd['confirm_password']
+        return cd['password2']
     
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -70,7 +70,7 @@ class RegistrationForm(forms.ModelForm):
         self.fields['user_name'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'Username'})
         self.fields['email'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'E-mail', 'name': 'email', 'id': 'id_email'})
         self.fields['password'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'Password'})
-        self.fields['confirm_password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Confirm Password'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Confirm Password'})
 
 class UserEditForm(forms.ModelForm):
     
