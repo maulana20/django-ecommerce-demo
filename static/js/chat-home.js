@@ -7,19 +7,45 @@ function drawMessage(message) {
     let position = 'left';
     const date = new Date(message.created);
     
-    if (message.user === currentUser) position = 'right';
+    if (message.user.uuid === currentUser) position = 'right';
     
     const messageItem = `
         <li class="message ${position}">`
-            + ( message.shop_image ? `<div class="avatar" style="background-image: url('/media/${message.shop_image}'); background-size: cover;"></div>` : `<div class="avatar">${message.full_name}</div>`) +
+            + ( message.shop ? `<div class="avatar" style="background-image: url('${message.shop.image}'); background-size: cover;"></div>` : `<div class="avatar">${message.user.user_name}</div>`) +
                 `<div class="text_wrapper">
-                    <div class="text">${message.body}<br>
-                        <span class="small">${date}</span>
+                    <div class="text">
+                        ${message.body}<br><span class="small">${date}</span>
+                    </div>
                 </div>
             </div>
         </li>`;
     
     $(messageItem).appendTo('#messages');
+    
+    if (message.product) {
+        
+        const messageItem = `
+            <li class="message ${position}">`
+                + ( message.shop ? `<div class="avatar" style="background-image: url('${message.shop.image}'); background-size: cover;"></div>` : `<div class="avatar">${message.user.user_name}</div>`) +
+                    `<div class="text_wrapper" style="font-size: 10pt;">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <img class="img-fluid mx-auto d-block" style="width: auto; height: auto; max-width: 100%; max-height: 100%; margin: auto; margin-top: 0px;" alt="Responsive image" src="${message.product.image}">
+                            </div>
+                            <div class="col-md-9 col-lg-9">
+                                <div class="text">
+                                    <a href="${message.product.absolute_url}">
+                                        ${message.product.title}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>`;
+            
+        $(messageItem).appendTo('#messages');
+    }
 }
 
 function getConversation(recipient) {

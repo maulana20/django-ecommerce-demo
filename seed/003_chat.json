@@ -5,6 +5,7 @@
     "fields": {
         "user": 3,
         "recipient": 2,
+        "product": 1,
         "body": "apakah barang ini ready kak ?",
         "created": "2021-09-15T10:14:15Z"
     }

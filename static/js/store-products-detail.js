@@ -22,7 +22,7 @@ function drawMessage(message) {
     let position = 'left';
     const date = new Date(message.created);
     
-    if (message.user === currentUser) position = 'right';
+    if (message.user.uuid === currentUser) position = 'right';
     
     const messageItem = `
         <li class="message ${position}">
@@ -33,6 +33,27 @@ function drawMessage(message) {
         </li>`;
     
     $(messageItem).appendTo('#messages');
+    
+    if (message.product) {
+        
+        const messageItem = `
+            <li class="message ${position}">
+                <div class="text_wrapper" style="margin-right: 0px; margin-left: 0px; padding: 10px;">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3">
+                            <img class="img-fluid mx-auto d-block" style="width: auto; height: auto; max-width: 100%; max-height: 100%; margin: auto; margin-top: 0px;" alt="Responsive image" src="${message.product.image}">
+                        </div>
+                        <div class="col-md-9 col-lg-9">
+                            <a href="${message.product.absolute_url}">
+                                ${message.product.title}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>`;
+    
+        $(messageItem).appendTo('#messages');
+    }
 }
 
 function getMessages() {

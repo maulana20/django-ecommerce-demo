@@ -4,10 +4,14 @@ from django.conf import settings
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
+from store.models import Product
+
 class Message(models.Model):
     
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='user', related_name='comments_from', db_index=True)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='recipient', related_name='comments_to', db_index=True)
+    
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product', blank=True, null=True)
     
     body = models.TextField(max_length=500, blank=True)
     
