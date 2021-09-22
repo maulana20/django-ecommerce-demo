@@ -22,7 +22,7 @@ function drawMessage(message) {
     let position = 'left';
     const date = new Date(message.created);
     
-    if (message.user.uuid === currentUser) position = 'right';
+    if (message.user === currentUser) position = 'right';
     
     const messageItem = `
         <li class="message ${position}">
@@ -84,12 +84,14 @@ function getMessageById(message) {
 function sendMessage(body) {
     $.post('/chat/api/v1/message/', {
         recipient: currentRecipient,
-        body: body
+        body: body,
+        slug: document.getElementById('product') != null ? document.getElementById('product').value : '',
     }).done(function () {
         console.log('success send');
     }).fail(function () {
         alert('Error! Check console!');
     });
+    if (document.getElementById('product') != null) closeProduct()
 }
 
 function openChat() {
@@ -99,6 +101,10 @@ function openChat() {
 
 function closeChat() {
     document.getElementById("chat-box").style.display = 'none'
+}
+
+function closeProduct() {
+    document.getElementById("chat-message-product").remove()
 }
 
 $(document).ready(function () {

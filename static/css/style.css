@@ -121,6 +121,7 @@
     font-weight: bold;
     padding: 5px 10px;
     cursor: pointer;
+    background-color: #ffffff;
 }
 
 .chat-box {
@@ -180,7 +181,13 @@
 
 .chat-box .chat-message .chat-message-board {
     display: flex;
-    box-shadow: rgb(0 0 0 / 8%) 0px -1px 2px 0px;
-    padding: 10px 16px;
+    padding: 10px 0px;
     align-items: flex-end;
+}
+
+.chat-box .chat-message .chat-message-product {
+    padding: 10px 35px;
+    background-color: #ece6e6;
+    position: absolute;
+    bottom: 40px;
 }

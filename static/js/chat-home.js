@@ -7,11 +7,11 @@ function drawMessage(message) {
     let position = 'left';
     const date = new Date(message.created);
     
-    if (message.user.uuid === currentUser) position = 'right';
+    if (message.user === currentUser) position = 'right';
     
     const messageItem = `
         <li class="message ${position}">`
-            + ( message.shop ? `<div class="avatar" style="background-image: url('${message.shop.image}'); background-size: cover;"></div>` : `<div class="avatar">${message.user.user_name}</div>`) +
+            + ( message.shop ? `<div class="avatar" style="background-image: url('${message.shop.image}'); background-size: cover;"></div>` : `<div class="avatar">${message.user_name}</div>`) +
                 `<div class="text_wrapper">
                     <div class="text">
                         ${message.body}<br><span class="small">${date}</span>
@@ -26,7 +26,7 @@ function drawMessage(message) {
         
         const messageItem = `
             <li class="message ${position}">`
-                + ( message.shop ? `<div class="avatar" style="background-image: url('${message.shop.image}'); background-size: cover;"></div>` : `<div class="avatar">${message.user.user_name}</div>`) +
+                + ( message.shop ? `<div class="avatar" style="background-image: url('${message.shop.image}'); background-size: cover;"></div>` : `<div class="avatar">${message.user_name}</div>`) +
                     `<div class="text_wrapper" style="font-size: 10pt;">
                         <div class="row">
                             <div class="col-md-3 col-lg-3">
@@ -76,7 +76,8 @@ function getMessageById(message) {
 function sendMessage(recipient, body) {
     $.post('/chat/api/v1/message/', {
         recipient: recipient,
-        body: body
+        body: body,
+        slug: '',
     }).done(function () {
         console.log('success send');
     }).fail(function () {
