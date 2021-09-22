@@ -15,5 +15,27 @@
             <div><a href="{% url 'account:edit' %}">Change Details</a></div>
         </div>
         <hr />
+        <div class="row">
+            <span class="h6">History User</span>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <ol class="list-group list-group-numbered">
+                {% for history in user.history.all %}
+                    <li class="list-group-item">
+                        <div class="d-flex bd-highlight">
+                            <div class="flex-grow-1 bd-highlight">
+                                <span>{{ history.history_change_reason }}</span>
+                            </div>
+                            <div class="bd-highlight">
+                                <span class="text-muted font-weight-normal">{{ history.history_date }}</span>
+                            </div>
+                        </div>
+                    </li>
+                    
+                {% endfor %}
+                </ol>
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django_seed',
     'rest_framework',
     'channels',
+    'simple_history',
     'store',
     'cart',
     'account',
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'

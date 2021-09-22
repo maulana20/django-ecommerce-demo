@@ -1,6 +1,7 @@
 import uuid
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin)
 from django.db import models
+from simple_history.models import HistoricalRecords
 
 class CustomAccountManager(BaseUserManager):
     
@@ -46,6 +47,8 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     updated = models.DateTimeField(auto_now=True)
 
     objects = CustomAccountManager()
+    
+    history = HistoricalRecords()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['user_name']
@@ -55,6 +58,14 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.user_name
+    
+    def save_without_historical_record(self, *args, **kwargs):
+        self.skip_history_when_saving = True
+        try:
+            ret = self.save(*args, **kwargs)
+        finally:
+            del self.skip_history_when_saving
+        return ret
 
 class Shop(models.Model):
     user = models.OneToOneField(UserBase, related_name='shop', on_delete=models.CASCADE, primary_key=True)

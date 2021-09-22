@@ -81,3 +81,4 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 - [customauth](https://kimmosaaskilahti.fi/blog/2021-04-18-django-custom-authentication/)
 - [comments](https://djangocentral.com/creating-comments-system-with-django/)
 - [chat](https://github.com/narrowfail/django-channels-chat)
+- [history](https://django-simple-history.readthedocs.io/en/latest/quick_start.html)

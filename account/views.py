@@ -32,6 +32,8 @@ def account_edit(request):
             user = UserBase.objects.get(id=request.user.id)
             user.full_name = request.POST['full_name']
             
+            user._change_reason = 'edit account'
+            
             user.save()
     else:
         editForm = UserEditForm(instance=request.user)
@@ -45,6 +47,7 @@ def account_login(request):
         
         if loginForm.is_valid():
             user = authenticate(request, email=request.POST["email"], password=request.POST["password"])
+            user._change_reason = 'login'
             
             if user:
                 if user.is_superuser == True:
@@ -74,6 +77,8 @@ def account_register(request):
             user.email = registerForm.cleaned_data['email']
             user.set_password(registerForm.cleaned_data['password'])
             user.is_active = False
+            
+            user._change_reason = 'register'
             
             user.save()
             
@@ -106,6 +111,8 @@ def account_verify(request, uidb64, token):
     
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
+        user._change_reason = 'account verify'
+        
         user.save()
         
         login(request, user)

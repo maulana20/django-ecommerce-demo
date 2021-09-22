@@ -19,3 +19,4 @@ django-seed==0.2.2
 djangorestframework==3.12.4
 channels==2.4.0
 channels-redis==2.4.2
+django-simple-history==3.0.0
