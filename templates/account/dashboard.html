@@ -21,19 +21,26 @@
         <div class="row">
             <div class="col-6">
                 <ol class="list-group list-group-numbered">
+                
                 {% for history in user.history.all %}
-                    <li class="list-group-item">
-                        <div class="d-flex bd-highlight">
-                            <div class="flex-grow-1 bd-highlight">
-                                <span>{{ history.history_change_reason }}</span>
+                    
+                    {% if history.history_change_reason is not None %}
+                        
+                        <li class="list-group-item">
+                            <div class="d-flex bd-highlight">
+                                <div class="flex-grow-1 bd-highlight">
+                                    <span>{{ history.history_change_reason }}</span>
+                                </div>
+                                <div class="bd-highlight">
+                                    <span class="text-muted font-weight-normal">{{ history.history_date }}</span>
+                                </div>
                             </div>
-                            <div class="bd-highlight">
-                                <span class="text-muted font-weight-normal">{{ history.history_date }}</span>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                        
+                    {% endif %}
                     
                 {% endfor %}
+                
                 </ol>
             </div>
         </div>

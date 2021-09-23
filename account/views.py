@@ -47,12 +47,12 @@ def account_login(request):
         
         if loginForm.is_valid():
             user = authenticate(request, email=request.POST["email"], password=request.POST["password"])
-            user._change_reason = 'login'
             
             if user:
                 if user.is_superuser == True:
                     loginForm.add_error(None, 'Not for admin!')
                 else:
+                    user.save_without_historical_record
                     login(request, user)
                     return redirect('account:dashboard')
             else:
@@ -111,10 +111,10 @@ def account_verify(request, uidb64, token):
     
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
-        user._change_reason = 'account verify'
         
         user.save()
         
+        user._change_reason = 'account verify'
         login(request, user)
         
         return redirect('account:dashboard')
