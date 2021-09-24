@@ -1,0 +1,123 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}
+    Discussion
+{% endblock %}
+
+{% block content %}
+    <div class="container" style="margin-top: 10px;">
+        
+        {% include 'core/validation-errors.html' %}
+        
+        <div class="row border">
+            {% for comment in comments.all %}
+                 
+                 <div class="col-sm-12 col-lg-12" style="padding: 10px; margin: 10px 0 10px 0;">
+                     <div class="row">
+                         <div class="col-sm-12 col-lg-7">
+                             <div class="row">
+                                <div class="col-sm-2 col-lg-2">
+                                    <div style="background-image: url('/media/{{comment.product.image}}'); background-size: cover; height: 80px; width: 80px; padding: 10px;"></div>
+                                </div>
+                                <div class="col-sm-10 col-lg-10">
+                                    <div style="overflow: hidden; line-height: 1.5; height: 40px;">{{ comment.product.title }}</div>
+                                </div>
+                            </div>
+                         </div>
+                         <div class="col-sm-12 col-lg-5">
+                             
+                             {% if comment.user == None %}
+                                 <span class="fw-bold">anonim</span>
+                             {% elif comment.user.shop %}
+                                 {% if comment.user.shop == comment.product.shop %}
+                                     <span class="fw-bold">{{ comment.user.shop.title }}</span>
+                                     <div class="shop-label">shop</div>
+                                 {% else %}
+                                     <span class="fw-bold">{{ comment.user.shop.title }}</span>
+                                 {% endif %}
+                             {% else %}
+                                 <span class="fw-bold">{{ comment.user.user_name }}</span>
+                             {% endif %}
+                             
+                             <br />
+                             <span class="text-muted font-weight-normal">{{ comment.created }}</span>
+                             <p>
+                                 {{ comment.body | linebreaks }}
+                             </p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="border bg-light" onclick="dropdownReply('reply-{{ forloop.counter }}')">
+                     <div style="padding: 5px; letter-spacing: 1px; font-weight: bold;">
+                         balasan ({{ comment.replies.count }})
+                     </div>
+                 </div>
+                 <div id="reply-{{ forloop.counter }}" class="dropdown-reply border-bottom">
+                     
+                     {% for reply in comment.replies.all %}
+                         
+                         <div style="padding-left: 30px;">
+                             
+                             {% if forloop.counter != 1 %}
+                                 <hr />
+                             {% endif %}
+                             
+                             <div class="d-flex bd-highlight">
+                                 <div class="flex-grow-1 bd-highlight">
+                                     {% if reply.user == None %}
+                                         <span class="fw-bold">anonim</span>
+                                     {% elif reply.user.shop %}
+                                         {% if reply.user.shop == comment.product.shop %}
+                                             <span class="fw-bold">{{ reply.user.shop.title }}</span>
+                                             <div class="shop-label">shop</div>
+                                         {% else %}
+                                             <span class="fw-bold">{{ reply.user.shop.title }}</span>
+                                         {% endif %}
+                                     {% else %}
+                                         <span class="fw-bold">{{ reply.user.user_name }}</span>
+                                     {% endif %}
+                                     
+                                 </div>
+                                 <div class="bd-highlight">
+                                     <span class="text-muted font-weight-normal">{{ reply.created }}</span>
+                                 </div>
+                             </div>
+                             <p>
+                                 {{ reply.body | linebreaks }}
+                             </p>
+                         </div>
+                         
+                     {% endfor %}
+                     
+                     <form action="{% url "store:discussion" %}" method="post" enctype="multipart/form-data">
+                         {% csrf_token %}
+                         
+                         <input type="hidden" name="comment" value="{{ comment.id }}" />
+                         
+                         <div class="row">
+                             <div class="col-sm-12 col-lg-12">
+                                 {{ form.body }}
+                             </div>
+                         </div>
+                         <br>
+                         <div class="row">
+                             <div class="col-sm-12 col-lg-12 d-flex justify-content-end">
+                                 <button class="btn btn-success btn-sm">balas</button>
+                             </div>
+                         </div>
+                     </form>
+                     
+                 </div>
+                 
+             {% endfor %}
+             
+        </div>
+    </div>
+    
+    <script>
+        function dropdownReply(id) {
+            document.getElementById(id).classList.toggle("dropdown-reply-show");
+        }
+    </script>
+{% endblock %}

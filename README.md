@@ -61,17 +61,17 @@ The Django-Ecommerce is an open-source project initiative and tutorial series bu
 ##### discussion
 ![discussion](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/discussion.png)
 
-##### chat shop
+##### discussion reply
+![discussion-reply](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/discussion-reply.png)
+
+##### chat
 ![chat](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat.png)
-
-##### chat user
-![chat-user](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat-user.png)
-
-##### chat rest api
-![chat-rest-api](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat-rest-api.png)
 
 ##### chat product
 ![chat-product](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat-product.png)
+
+##### chat rest api
+![chat-rest-api](https://github.com/maulana20/django-ecommerce-demo/blob/main/screens/chat-rest-api.png)
 
 ##### reference :
 - [breadcrumbs](https://django-bootstrap-breadcrumbs.readthedocs.io/en/latest/)

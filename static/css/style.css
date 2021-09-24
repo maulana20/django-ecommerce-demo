@@ -191,3 +191,16 @@
     position: absolute;
     bottom: 40px;
 }
+
+.dropdown-reply {
+    display: none;
+}
+
+.dropdown-reply a {
+    display: block;
+}
+
+.dropdown-reply-show {
+    display: block;
+    padding: 20px;
+}

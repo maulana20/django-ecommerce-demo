@@ -122,6 +122,38 @@
                                  <p>
                                      {{ comment.body | linebreaks }}
                                  </p>
+                                 
+                                 {% for reply in comment.replies.all %}
+                                 
+                                     <div style="padding-left: 30px;">
+                                         <hr/>
+                                         <div class="d-flex bd-highlight">
+                                             <div class="flex-grow-1 bd-highlight">
+                                                 
+                                                 {% if reply.user == None %}
+                                                     <span class="fw-bold">anonim</span>
+                                                 {% elif reply.user.shop %}
+                                                     {% if reply.user.shop == product.shop %}
+                                                         <span class="fw-bold">{{ reply.user.shop.title }}</span>
+                                                         <div class="shop-label">shop</div>
+                                                     {% else %}
+                                                         <span class="fw-bold">{{ reply.user.shop.title }}</span>
+                                                     {% endif %}
+                                                 {% else %}
+                                                     <span class="fw-bold">{{ reply.user.user_name }}</span>
+                                                 {% endif %}
+                                                 
+                                             </div>
+                                             <div class="bd-highlight">
+                                                 <span class="text-muted font-weight-normal">{{ reply.created }}</span>
+                                             </div>
+                                         </div>
+                                         <p>
+                                             {{ reply.body | linebreaks }}
+                                         </p>
+                                     </div>
+                                
+                                 {% endfor %}
                              </div>
                          {% endfor %}
                      {% endif %}

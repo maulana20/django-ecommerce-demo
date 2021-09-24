@@ -44,22 +44,22 @@
 },
 {
     "model": "store.comment",
-    "pk": 2,
-    "fields": {
-        "user": 2,
-        "product": 1,
-        "body": "bisa kak .. silahkan di order",
-        "created": "2021-09-09T20:49:58Z"
-    }
-},
-{
-    "model": "store.comment",
     "pk": null,
     "fields": {
         "user": null,
         "product": 1,
         "body": "stok masih ada kak ?",
         "created": "2021-09-09T23:49:58Z"
+    }
+},
+{
+    "model": "store.reply",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "comment": 1,
+        "body": "bisa kak .. silahkan di order",
+        "created": "2021-09-09T20:49:58Z"
     }
 }
 ]

@@ -64,4 +64,19 @@ class Comment(models.Model):
         ordering = ('-created',)
     
     def __str__(self):
-        return 'Comment {} by {}' . format(self.body, self.user.user_name)
+        return 'Comment {}' . format(self.body)
+
+class Reply(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
+    
+    body = models.TextField(max_length=500, blank=True)
+    
+    created = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name_plural = 'replies'
+        ordering = ('-created',)
+    
+    def __str__(self):
+        return 'Reply {}' . format(self.body)

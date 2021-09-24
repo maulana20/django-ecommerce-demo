@@ -3,18 +3,11 @@ from django.db.models import Count
 
 from account.models import UserBase
 
-def chat_inbox(request):
-    if hasattr(request.user, 'shop') == False:
-        return redirect('account:dashboard')
+def chat_message(request):
     
-    users = { UserBase.objects.get(id=user['user']) for user in request.user.comments_to.all().values('user').annotate(total=Count('id')).order_by() if request.user.id != user['user'] }
-    
-    return render(request, 'chat/home.html', {'users': users})
-
-def chat_sent(request):
     if hasattr(request.user, 'shop') == True:
-        return redirect('account:dashboard')
-    
-    users = { UserBase.objects.get(id=recipient['recipient']) for recipient in request.user.comments_from.all().values('recipient').annotate(total=Count('id')).order_by() if request.user.id != recipient['recipient'] }
+        users = { UserBase.objects.get(id=recipient['recipient']) for recipient in request.user.comments_from.all().values('recipient').annotate(total=Count('id')).order_by() if request.user.id != recipient['recipient'] }
+    else:
+        users = { UserBase.objects.get(id=user['user']) for user in request.user.comments_to.all().values('user').annotate(total=Count('id')).order_by() if request.user.id != user['user'] }
     
     return render(request, 'chat/home.html', {'users': users})

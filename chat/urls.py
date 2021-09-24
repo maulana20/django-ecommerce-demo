@@ -16,6 +16,5 @@ app_name = 'chat'
 urlpatterns = [
     path(r'api/v1/', include(router.urls)),
     
-    path('inbox', login_required(views.chat_inbox), name='inbox'),
-    path('sent', login_required(views.chat_sent), name='sent'),
+    path('message', login_required(views.chat_message), name='message'),
 ]

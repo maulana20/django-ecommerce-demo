@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 
-from .forms import CommentForm
-from .models import Category, Product
+from .forms import CommentForm, ReplyForm
+from .models import Category, Product, Comment
 
 def all_products(request):
     products = Product.products.all()
@@ -31,6 +31,29 @@ def product_detail(request, slug):
         commentForm = CommentForm()
     
     return render(request, 'store/products/detail.html', {'product': product, 'form': commentForm})
+
+def store_discussion(request):
+    
+    if hasattr(request.user, 'shop') == True:
+        comments = Comment.objects.filter(product__in=request.user.shop.products.values_list('pk', flat=True))
+    else:
+        comments = Comment.objects.filter(user=request.user)
+    
+    if request.method == 'POST':
+        
+        replyForm = ReplyForm(data=request.POST)
+        
+        if replyForm.is_valid():
+            reply = replyForm.save(commit=False)
+            reply.user = request.user
+            
+            reply.save()
+            
+            replyForm = ReplyForm()
+    else:
+        replyForm = ReplyForm()
+    
+    return render(request, 'store/discussion/home.html', {'comments': comments, 'form': replyForm})
 
 def page_not_found_view(request, exception):
     return render(request, 'core/404.html', status=404)

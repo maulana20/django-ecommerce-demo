@@ -68,11 +68,10 @@
                                         <a class="dropdown-item" href="{% url 'account:edit' %}">account</a>
                                     </li>
                                     <li>
-                                        {% if user.shop %}
-                                            <a class="dropdown-item" href="{% url 'chat:inbox' %}">chat</a>
-                                        {% else %}
-                                            <a class="dropdown-item" href="{% url 'chat:sent' %}">chat</a>
-                                        {% endif %}
+                                        <a class="dropdown-item" href="{% url 'store:discussion' %}">discussion</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'chat:message' %}">chat</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{% url 'account:logout' %}">logout</a>
