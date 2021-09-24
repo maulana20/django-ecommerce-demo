@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'verbose_name_plural': 'replies',
-                'ordering': ('-created',),
+                'ordering': ('created',),
             },
         ),
     ]

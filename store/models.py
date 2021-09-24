@@ -76,7 +76,7 @@ class Reply(models.Model):
     
     class Meta:
         verbose_name_plural = 'replies'
-        ordering = ('-created',)
+        ordering = ('created',)
     
     def __str__(self):
         return 'Reply {}' . format(self.body)
